@@ -7,6 +7,7 @@ import { INDIA_POST_LOGO_BASE64 } from './indiapostLogo';
  * Specialized PDF generator for India Post (DOP) RD Installment Report
  */
 export function generateDopRdPdf({
+  fileName,
   metadata,
   headers,
   rows,
@@ -19,7 +20,7 @@ export function generateDopRdPdf({
   });
 
   const pageWidth = doc.internal.pageSize.getWidth();
-  const margin = 10;
+  const margin = 6;
 
   // 1. Logo only — left aligned, crisp High-DPI PNG
   const logoW = 65;
@@ -72,7 +73,7 @@ export function generateDopRdPdf({
 
   curY += 3;
 
-  // 5. Main Data Table
+  // 5. Main Data Table — matching print view column widths (total exactly 198mm)
   const tableHeaders = [
     'S.NO\n.',
     'E-Banking\nRef No',
@@ -99,11 +100,12 @@ export function generateDopRdPdf({
     styles: {
       font: 'helvetica',
       fontSize: 6,
-      cellPadding: 1.1,
+      cellPadding: 0.9,
       textColor: [0, 0, 0],
       lineColor: [0, 0, 0],
       lineWidth: 0.15,
       valign: 'middle',
+      overflow: 'linebreak',
     },
     headStyles: {
       fillColor: [184, 197, 242], // Exact pastel periwinkle #b8c5f2
@@ -115,56 +117,59 @@ export function generateDopRdPdf({
       lineColor: [0, 0, 0],
     },
     columnStyles: {
-      0: { halign: 'center', cellWidth: 8 }, // S.NO
-      1: { halign: 'left', cellWidth: 16 }, // E-Banking Ref No
-      2: { halign: 'left', cellWidth: 18 }, // RD Account Number
-      3: { halign: 'left', cellWidth: 26 }, // Account Name
-      4: { halign: 'left', cellWidth: 17 }, // RD Denomination
-      5: { halign: 'left', cellWidth: 17 }, // RD Total Deposit Amount
-      6: { halign: 'center', cellWidth: 11 }, // No of Installments
-      7: { halign: 'center', cellWidth: 10 }, // Rebate
-      8: { halign: 'center', cellWidth: 11 }, // Default fee
-      9: { halign: 'center', cellWidth: 18 }, // ASLAAS Number
-      10: { halign: 'center', cellWidth: 12 }, // Status
-      11: { halign: 'center', cellWidth: 26 }, // Last Created Date & Time
+      0: { halign: 'center', cellWidth: 8 },  // S.NO
+      1: { halign: 'left', cellWidth: 18 },    // E-Banking Ref No
+      2: { halign: 'left', cellWidth: 20 },    // RD Account Number
+      3: { halign: 'left', cellWidth: 36 },    // Account Name
+      4: { halign: 'left', cellWidth: 18 },    // RD Denomination
+      5: { halign: 'left', cellWidth: 20 },    // RD Total Deposit Amount
+      6: { halign: 'center', cellWidth: 10 },  // No of Installments
+      7: { halign: 'center', cellWidth: 10 },  // Rebate
+      8: { halign: 'center', cellWidth: 11 },  // Default fee
+      9: { halign: 'center', cellWidth: 17 },  // ASLAAS Number
+      10: { halign: 'center', cellWidth: 10 }, // Status
+      11: { halign: 'center', cellWidth: 20 }, // Last Created Date & Time
     },
   });
 
-  // 6. Bottom Summary Table — full width, no border, blue header
+  // 6. Bottom Summary Table — full width (198mm), no border, blue header
   if (summaryRow) {
     const finalY = doc.lastAutoTable.finalY;
-    const tableW = pageWidth - margin * 2; // full usable width
+    const tableW = 198; // matching main table
     const col0W = tableW / 2;
     const col1W = tableW / 2;
 
     // Header row — blue fill, no border
     doc.setFillColor(184, 197, 242); // #b8c5f2
-    doc.rect(margin, finalY, tableW, 7, 'F');
+    doc.rect(margin, finalY, tableW, 6.5, 'F');
     // Header text
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(7.5);
     doc.setTextColor(0, 0, 0);
-    doc.text('E-Banking Ref No', margin + 2, finalY + 4.5);
-    doc.text('Total Deposit Amount', margin + col0W + 2, finalY + 4.5);
+    doc.text('E-Banking Ref No', margin + 2, finalY + 4.2);
+    doc.text('Total Deposit Amount', margin + col0W + 2, finalY + 4.2);
 
     // Data row — white fill, no border
-    const dataY = finalY + 7;
+    const dataY = finalY + 6.5;
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(7.5);
     doc.setTextColor(0, 0, 0);
-    doc.text(String(summaryRow.refNo || ''), margin + 2, dataY + 4.5);
-    doc.text(String(summaryRow.totalDepositAmount || ''), margin + col0W + 2, dataY + 4.5);
+    doc.text(String(summaryRow.refNo || ''), margin + 2, dataY + 4.2);
+    doc.text(String(summaryRow.totalDepositAmount || ''), margin + col0W + 2, dataY + 4.2);
   }
 
-  // Save the PDF
-  const safeFilename = `RDInstallmentReport_${metadata.listRefNo || 'export'}.pdf`;
-  doc.save(safeFilename);
+  // Save the PDF using original uploaded file name
+  const cleanBaseName = fileName
+    ? fileName.replace(/\.[^/.]+$/, '')
+    : `RDInstallmentReport_${metadata.listRefNo || 'export'}`;
+  doc.save(`${cleanBaseName}.pdf`);
 }
 
 /**
  * Standard PDF generator for generic Excel sheets
  */
 export function generateGenericPdf({
+  fileName = '',
   title = 'Document Report',
   company = '',
   subtitle = '',
@@ -300,6 +305,8 @@ export function generateGenericPdf({
 
   autoTable(doc, tableOptions);
 
-  const safeTitle = (title || 'report').replace(/[^a-z0-9_-]/gi, '_').toLowerCase();
-  doc.save(`${safeTitle}.pdf`);
+  const cleanBaseName = fileName
+    ? fileName.replace(/\.[^/.]+$/, '')
+    : (title || 'report').replace(/[^a-z0-9_-]/gi, '_').toLowerCase();
+  doc.save(`${cleanBaseName}.pdf`);
 }

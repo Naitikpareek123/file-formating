@@ -50,6 +50,14 @@ export default function App() {
     return workbookData.sheets[activeSheetIndex] || workbookData.sheets[0];
   }, [workbookData, activeSheetIndex]);
 
+  // When active sheet changes or workbook changes, setup state and document title for print
+  useEffect(() => {
+    if (workbookData?.fileName) {
+      const cleanName = workbookData.fileName.replace(/\.[^/.]+$/, '');
+      document.title = cleanName;
+    }
+  }, [workbookData]);
+
   // When active sheet changes, setup state
   useEffect(() => {
     if (activeSheet && activeSheet.headers) {
@@ -173,6 +181,9 @@ export default function App() {
 
   // Direct Print
   const handlePrint = () => {
+    if (workbookData?.fileName) {
+      document.title = workbookData.fileName.replace(/\.[^/.]+$/, '');
+    }
     window.print();
   };
 
@@ -183,6 +194,7 @@ export default function App() {
     // Check if India Post RD report
     if (activeSheet.isDopRd && viewMode === 'dop_official') {
       generateDopRdPdf({
+        fileName: workbookData?.fileName,
         metadata: activeSheet.dopMetadata || {
           reportTitle: 'RECURRING DEPOSIT INSTALLMENT REPORT',
           agentId: '',
@@ -225,6 +237,7 @@ export default function App() {
     }
 
     generateGenericPdf({
+      fileName: workbookData?.fileName,
       title,
       company,
       subtitle,

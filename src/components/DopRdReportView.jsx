@@ -9,7 +9,7 @@ export default function DopRdReportView({ metadata, headers, rows, summaryRow })
         @media print {
           @page {
             size: A4 portrait;
-            margin: 6mm 10mm 6mm 10mm;
+            margin: 5mm 6mm 5mm 6mm;
           }
           html, body {
             font-family: Arial, Helvetica, sans-serif !important;
@@ -47,9 +47,12 @@ export default function DopRdReportView({ metadata, headers, rows, summaryRow })
           .dop-table {
             border-collapse: collapse !important;
             width: 100% !important;
+            table-layout: fixed !important;
+            box-sizing: border-box !important;
           }
           .dop-table th, .dop-table td {
             border: 1px solid #000 !important;
+            box-sizing: border-box !important;
           }
           thead {
             display: table-header-group !important;
@@ -103,45 +106,45 @@ export default function DopRdReportView({ metadata, headers, rows, summaryRow })
           </div>
         </div>
 
-        {/* Main 12-Column Table */}
-        <div className="overflow-x-auto mt-4">
-          <table className="dop-table w-full border-collapse border border-black text-[10px]">
+        {/* Main 12-Column Table — fixed layout with optimized column widths */}
+        <div className="w-full overflow-x-auto mt-4">
+          <table className="dop-table w-full border-collapse border border-black text-[9.5px]" style={{ tableLayout: 'fixed' }}>
             <thead>
-              <tr className="bg-[#b8c5f2] text-black font-bold text-center">
-                <th className="border border-black px-1 py-1.5 w-7 text-center">
+              <tr className="bg-[#b8c5f2] text-black font-bold text-center leading-tight">
+                <th className="border border-black px-0.5 py-1 text-center" style={{ width: '4%' }}>
                   S.NO<br />.
                 </th>
-                <th className="border border-black px-1 py-1.5 text-left w-16">
+                <th className="border border-black px-1 py-1 text-left" style={{ width: '9%' }}>
                   E-Banking<br />Ref No
                 </th>
-                <th className="border border-black px-1 py-1.5 text-left w-20">
+                <th className="border border-black px-1 py-1 text-left" style={{ width: '10%' }}>
                   RD Account<br />Number
                 </th>
-                <th className="border border-black px-1.5 py-1.5 text-left">
+                <th className="border border-black px-1.5 py-1 text-left" style={{ width: '18%' }}>
                   Account Name
                 </th>
-                <th className="border border-black px-1 py-1.5 text-left w-16">
+                <th className="border border-black px-1 py-1 text-left" style={{ width: '9%' }}>
                   RD<br />Denominatio<br />n
                 </th>
-                <th className="border border-black px-1 py-1.5 text-left w-16">
+                <th className="border border-black px-1 py-1 text-left" style={{ width: '10%' }}>
                   RD Total<br />Deposit<br />Amount
                 </th>
-                <th className="border border-black px-1 py-1.5 w-11 text-center">
+                <th className="border border-black px-0.5 py-1 text-center" style={{ width: '5%' }}>
                   No of<br />Install<br />ments
                 </th>
-                <th className="border border-black px-1 py-1.5 w-10 text-center">
+                <th className="border border-black px-0.5 py-1 text-center" style={{ width: '5%' }}>
                   Rebate
                 </th>
-                <th className="border border-black px-1 py-1.5 w-10 text-center">
+                <th className="border border-black px-0.5 py-1 text-center" style={{ width: '5.5%' }}>
                   Default<br />fee
                 </th>
-                <th className="border border-black px-1 py-1.5 w-16 text-center">
+                <th className="border border-black px-0.5 py-1 text-center" style={{ width: '9%' }}>
                   ASLAAS<br />Number
                 </th>
-                <th className="border border-black px-1 py-1.5 w-11 text-center">
+                <th className="border border-black px-0.5 py-1 text-center" style={{ width: '5%' }}>
                   Status
                 </th>
-                <th className="border border-black px-1 py-1.5 w-20 text-center">
+                <th className="border border-black px-1 py-1 text-center" style={{ width: '10%' }}>
                   Last Created<br />Date & Time
                 </th>
               </tr>
@@ -149,28 +152,27 @@ export default function DopRdReportView({ metadata, headers, rows, summaryRow })
             <tbody>
               {rows.map((row, idx) => (
                 <tr key={idx} className="bg-white">
-                  <td className="border border-black px-1 py-1 text-center font-normal">{row[0]}</td>
-                  <td className="border border-black px-1 py-1 text-left font-normal">{row[1]}</td>
-                  <td className="border border-black px-1 py-1 text-left font-normal">{row[2]}</td>
-                  <td className="border border-black px-1.5 py-1 text-left font-normal">{row[3]}</td>
-                  <td className="border border-black px-1 py-1 text-left whitespace-nowrap font-normal">{row[4]}</td>
-                  <td className="border border-black px-1 py-1 text-left font-normal">
-                    {/* Render amount with Cr. below like in target image */}
+                  <td className="border border-black px-0.5 py-0.5 text-center font-normal">{row[0]}</td>
+                  <td className="border border-black px-1 py-0.5 text-left font-normal text-[9px] break-all">{row[1]}</td>
+                  <td className="border border-black px-1 py-0.5 text-left font-normal text-[9px] break-all">{row[2]}</td>
+                  <td className="border border-black px-1.5 py-0.5 text-left font-normal break-words leading-tight">{row[3]}</td>
+                  <td className="border border-black px-1 py-0.5 text-left whitespace-nowrap font-normal text-[9px]">{row[4]}</td>
+                  <td className="border border-black px-1 py-0.5 text-left font-normal text-[9px] leading-tight">
                     {typeof row[5] === 'string' && row[5].includes('Cr.') ? (
                       <div>
                         <div>{row[5].replace('Cr.', '').trim()}</div>
-                        <div className="text-[9px]">Cr.</div>
+                        <div className="text-[8.5px]">Cr.</div>
                       </div>
                     ) : (
                       row[5]
                     )}
                   </td>
-                  <td className="border border-black px-1 py-1 text-center font-normal">{row[6]}</td>
-                  <td className="border border-black px-1 py-1 text-center font-normal">{row[7]}</td>
-                  <td className="border border-black px-1 py-1 text-center font-normal">{row[8]}</td>
-                  <td className="border border-black px-1 py-1 text-center font-normal">{row[9]}</td>
-                  <td className="border border-black px-1 py-1 text-center font-normal">{row[10]}</td>
-                  <td className="border border-black px-1 py-1 text-center text-[9px] leading-tight font-normal">
+                  <td className="border border-black px-0.5 py-0.5 text-center font-normal">{row[6]}</td>
+                  <td className="border border-black px-0.5 py-0.5 text-center font-normal">{row[7]}</td>
+                  <td className="border border-black px-0.5 py-0.5 text-center font-normal">{row[8]}</td>
+                  <td className="border border-black px-0.5 py-0.5 text-center font-normal text-[9px] break-all">{row[9]}</td>
+                  <td className="border border-black px-0.5 py-0.5 text-center font-normal text-[9px]">{row[10]}</td>
+                  <td className="border border-black px-0.5 py-0.5 text-center text-[8.5px] leading-tight font-normal">
                     {typeof row[11] === 'string' && row[11].includes(' ') ? (
                       <div>
                         <div>{row[11].split(' ')[0]}</div>
