@@ -65,9 +65,9 @@ export default function DopRdReportView({ metadata, headers, rows, summaryRow })
 
       {/* Sheet Simulation Container */}
       <div className="dop-container w-full max-w-[840px] bg-white rounded-lg border border-slate-300 shadow-xl p-8 sm:p-10 font-sans text-black">
-        {/* Top Header: Logo — clean official proportion, razor-sharp High-DPI */}
+        {/* Top Header: Logo — left aligned, extended length */}
         <div className="flex items-center justify-start mb-2">
-          <div className="shrink-0" style={{ width: '260px' }}>
+          <div className="shrink-0" style={{ width: '350px' }}>
             <img
               src={INDIA_POST_LOGO_BASE64}
               alt="India Post Logo"

@@ -22,9 +22,9 @@ export function generateDopRdPdf({
   const pageWidth = doc.internal.pageSize.getWidth();
   const margin = 6;
 
-  // 1. Logo only — left aligned, crisp High-DPI PNG
-  const logoW = 65;
-  const logoH = 22.5;
+  // 1. Logo only — left aligned, extended length High-DPI PNG
+  const logoW = 78;
+  const logoH = 27;
   const logoX = margin;
   const logoY = 6;
 
@@ -38,14 +38,14 @@ export function generateDopRdPdf({
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(9.5);
   doc.setTextColor(0, 0, 0);
-  doc.text(metadata.reportTitle || 'RECURRING DEPOSIT INSTALLMENT REPORT', pageWidth / 2, 33, { align: 'center' });
+  doc.text(metadata.reportTitle || 'RECURRING DEPOSIT INSTALLMENT REPORT', pageWidth / 2, 37, { align: 'center' });
 
   // 3. Search Criteria Section
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(7.5);
-  doc.text('Search Criteria', margin, 39);
+  doc.text('Search Criteria', margin, 43);
 
-  let curY = 43;
+  let curY = 47;
   const lineSpacing = 3.6;
 
   const criteriaList = [

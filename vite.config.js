@@ -8,4 +8,12 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  server: {
+    host: true, // Local Network / Wi-Fi par mobile aur doosre PC ke liye open karta hai
+    port: 5173,
+  },
+  preview: {
+    host: true,
+    port: 5173,
+  },
 })
