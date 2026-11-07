@@ -298,7 +298,7 @@ export default function App() {
         hasData={!!activeSheet}
       />
 
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-2 sm:px-6 lg:px-8 py-3 sm:py-6">
         {!activeSheet ? (
           <FileUpload
             onFileSelect={handleFileSelect}
@@ -310,7 +310,7 @@ export default function App() {
           <div>
             {/* If India Post DOP RD Report is detected, show informative pill banner */}
             {activeSheet.isDopRd && (
-              <div className="no-print mb-4 p-4 rounded-2xl bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xs">
+              <div className="no-print mb-3 sm:mb-4 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xs">
                 <div className="flex items-center gap-3">
                   <div className="w-9 h-9 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold text-sm shrink-0">
                     📮

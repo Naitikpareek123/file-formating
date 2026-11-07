@@ -47,6 +47,7 @@ export default function DopRdReportView({ metadata, headers, rows, summaryRow })
           .dop-table {
             border-collapse: collapse !important;
             width: 100% !important;
+            min-width: 100% !important;
             table-layout: fixed !important;
             box-sizing: border-box !important;
           }
@@ -64,10 +65,10 @@ export default function DopRdReportView({ metadata, headers, rows, summaryRow })
       `}</style>
 
       {/* Sheet Simulation Container */}
-      <div className="dop-container w-full max-w-[840px] bg-white rounded-lg border border-slate-300 shadow-xl p-8 sm:p-10 font-sans text-black">
+      <div className="dop-container w-full max-w-[840px] bg-white rounded-lg border border-slate-300 shadow-xl p-3 sm:p-8 md:p-10 font-sans text-black">
         {/* Top Header: Logo — left aligned, extended length */}
         <div className="flex items-center justify-start mb-2">
-          <div className="shrink-0" style={{ width: '350px' }}>
+          <div className="shrink-0 max-w-full" style={{ width: '350px' }}>
             <img
               src={INDIA_POST_LOGO_BASE64}
               alt="India Post Logo"
@@ -106,9 +107,12 @@ export default function DopRdReportView({ metadata, headers, rows, summaryRow })
           </div>
         </div>
 
-        {/* Main 12-Column Table — fixed layout with optimized column widths */}
-        <div className="w-full overflow-x-auto mt-4">
-          <table className="dop-table w-full border-collapse border border-black text-[9.5px]" style={{ tableLayout: 'fixed' }}>
+        {/* Main 12-Column Table — fixed layout with optimized column widths & mobile swipe */}
+        <div className="w-full overflow-x-auto mt-3 sm:mt-4">
+          <div className="sm:hidden no-print text-[10px] text-slate-500 font-medium text-right mb-1">
+            Table scroll karein ↔
+          </div>
+          <table className="dop-table w-full min-w-[640px] sm:min-w-full border-collapse border border-black text-[9.5px]" style={{ tableLayout: 'fixed' }}>
             <thead>
               <tr className="bg-[#b8c5f2] text-black font-bold text-center leading-tight">
                 <th className="border border-black px-0.5 py-1 text-center" style={{ width: '4%' }}>
@@ -188,10 +192,10 @@ export default function DopRdReportView({ metadata, headers, rows, summaryRow })
           </table>
         </div>
 
-        {/* Summary Table — full width, no border */}
+        {/* Summary Table — full width, no border, mobile scroll aligned */}
         {summaryRow && (
-          <div className="mt-0">
-            <table className="w-full border-collapse text-[11px]">
+          <div className="mt-0 overflow-x-auto">
+            <table className="w-full min-w-[640px] sm:min-w-full border-collapse text-[11px]">
               <thead>
                 <tr className="bg-[#b8c5f2] text-black font-bold">
                   <th className="px-3 py-1.5 text-left w-1/2">
