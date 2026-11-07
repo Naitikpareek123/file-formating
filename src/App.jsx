@@ -109,7 +109,7 @@ export default function App() {
       }
     } catch (err) {
       console.error(err);
-      setError('Excel file process karne me problem aayi. Kripya check karein ki file valid .xlsx, .xls ya .csv format me ho.');
+      setError('Error processing Excel file. Please ensure the file is in valid .xlsx, .xls, or .csv format.');
     } finally {
       setIsProcessing(false);
     }
@@ -302,7 +302,6 @@ export default function App() {
         {!activeSheet ? (
           <FileUpload
             onFileSelect={handleFileSelect}
-            onSampleSelect={handleSampleSelect}
             isProcessing={isProcessing}
             error={error}
           />

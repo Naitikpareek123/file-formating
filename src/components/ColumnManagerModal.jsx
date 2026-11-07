@@ -23,7 +23,7 @@ export default function ColumnManagerModal({
           <div>
             <h3 className="text-base font-bold text-slate-900">Manage Columns</h3>
             <p className="text-xs text-slate-500">
-              Columns ko show/hide karein aur text alignment set karein
+              Show/hide columns and customize column text alignment
             </p>
           </div>
           <button

@@ -38,11 +38,15 @@ export default function DopRdReportView({ metadata, headers, rows, summaryRow })
           .dop-container {
             width: 100% !important;
             max-width: 100% !important;
-            padding: 0 !important;
+            padding: 0 1.5mm 0 1.5mm !important;
             margin: 0 !important;
             border: none !important;
             box-shadow: none !important;
             background: #fff !important;
+            box-sizing: border-box !important;
+          }
+          .overflow-x-auto {
+            overflow: visible !important;
           }
           .dop-table {
             border-collapse: collapse !important;
@@ -50,10 +54,15 @@ export default function DopRdReportView({ metadata, headers, rows, summaryRow })
             min-width: 100% !important;
             table-layout: fixed !important;
             box-sizing: border-box !important;
+            border: 1px solid #000 !important;
+            border-right: 1.5px solid #000 !important;
           }
           .dop-table th, .dop-table td {
             border: 1px solid #000 !important;
             box-sizing: border-box !important;
+          }
+          .dop-table th:last-child, .dop-table td:last-child {
+            border-right: 1.5px solid #000 !important;
           }
           thead {
             display: table-header-group !important;
@@ -110,12 +119,12 @@ export default function DopRdReportView({ metadata, headers, rows, summaryRow })
         {/* Main 12-Column Table — fixed layout with optimized column widths & mobile swipe */}
         <div className="w-full overflow-x-auto mt-3 sm:mt-4">
           <div className="sm:hidden no-print text-[10px] text-slate-500 font-medium text-right mb-1">
-            Table scroll karein ↔
+            Scroll table horizontally ↔
           </div>
           <table className="dop-table w-full min-w-[640px] sm:min-w-full border-collapse border border-black text-[9.5px]" style={{ tableLayout: 'fixed' }}>
             <thead>
               <tr className="bg-[#b8c5f2] text-black font-bold text-center leading-tight">
-                <th className="border border-black px-0.5 py-1 text-center" style={{ width: '4%' }}>
+                <th className="border border-black px-0.5 py-1 text-center" style={{ width: '3.5%' }}>
                   S.NO<br />.
                 </th>
                 <th className="border border-black px-1 py-1 text-left" style={{ width: '9%' }}>
@@ -124,7 +133,7 @@ export default function DopRdReportView({ metadata, headers, rows, summaryRow })
                 <th className="border border-black px-1 py-1 text-left" style={{ width: '10%' }}>
                   RD Account<br />Number
                 </th>
-                <th className="border border-black px-1.5 py-1 text-left" style={{ width: '18%' }}>
+                <th className="border border-black px-1.5 py-1 text-left" style={{ width: '17.5%' }}>
                   Account Name
                 </th>
                 <th className="border border-black px-1 py-1 text-left" style={{ width: '9%' }}>
@@ -139,16 +148,16 @@ export default function DopRdReportView({ metadata, headers, rows, summaryRow })
                 <th className="border border-black px-0.5 py-1 text-center" style={{ width: '5%' }}>
                   Rebate
                 </th>
-                <th className="border border-black px-0.5 py-1 text-center" style={{ width: '5.5%' }}>
+                <th className="border border-black px-0.5 py-1 text-center" style={{ width: '5%' }}>
                   Default<br />fee
                 </th>
-                <th className="border border-black px-0.5 py-1 text-center" style={{ width: '9%' }}>
+                <th className="border border-black px-0.5 py-1 text-center" style={{ width: '8.5%' }}>
                   ASLAAS<br />Number
                 </th>
                 <th className="border border-black px-0.5 py-1 text-center" style={{ width: '5%' }}>
                   Status
                 </th>
-                <th className="border border-black px-1 py-1 text-center" style={{ width: '10%' }}>
+                <th className="border border-black border-r-2 border-r-black px-1 py-1 text-center" style={{ width: '12.5%' }}>
                   Last Created<br />Date & Time
                 </th>
               </tr>
@@ -176,7 +185,7 @@ export default function DopRdReportView({ metadata, headers, rows, summaryRow })
                   <td className="border border-black px-0.5 py-0.5 text-center font-normal">{row[8]}</td>
                   <td className="border border-black px-0.5 py-0.5 text-center font-normal text-[9px] break-all">{row[9]}</td>
                   <td className="border border-black px-0.5 py-0.5 text-center font-normal text-[9px]">{row[10]}</td>
-                  <td className="border border-black px-0.5 py-0.5 text-center text-[8.5px] leading-tight font-normal">
+                  <td className="border border-black border-r-2 border-r-black px-0.5 py-0.5 text-center text-[8.5px] leading-tight font-normal">
                     {typeof row[11] === 'string' && row[11].includes(' ') ? (
                       <div>
                         <div>{row[11].split(' ')[0]}</div>

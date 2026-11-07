@@ -24,7 +24,7 @@ export default function DocumentHeaderEditor({
         <div className="flex items-center gap-2.5">
           <Edit3 className="w-4 h-4 text-emerald-600" />
           <span className="text-xs font-bold text-slate-800 uppercase tracking-wider">
-            Document Header & Company Info (Edit Karein)
+            Document Header & Company Info (Edit)
           </span>
           <span className="text-xs text-slate-500 font-normal">
             — {company || title ? `${company || 'Company'} | ${title || 'Report'}` : 'Click to customize title & headers'}
