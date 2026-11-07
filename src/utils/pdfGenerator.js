@@ -21,13 +21,11 @@ export function generateDopRdPdf({
   const pageWidth = doc.internal.pageSize.getWidth();
   const margin = 10;
 
-  // 1. Logo & Govt of India Header — compact layout matching target format
-  // Logo: rectangular landscape (India Post red/yellow bugle logo)
-  const headerCenterX = pageWidth / 2;
-  const logoW = 26;  // landscape width
-  const logoH = 13; // landscape height
-  const logoX = headerCenterX - 44;
-  const logoY = 7;
+  // 1. Logo only — left aligned, compact vertical spacing
+  const logoW = 82;
+  const logoH = 28;
+  const logoX = margin;
+  const logoY = 6;
 
   try {
     doc.addImage(INDIA_POST_LOGO_BASE64, 'JPEG', logoX, logoY, logoW, logoH);
@@ -35,37 +33,18 @@ export function generateDopRdPdf({
     console.warn('Could not add logo to PDF:', e);
   }
 
-  // Vertical divider line between logo and text
-  doc.setDrawColor(150, 150, 150);
-  doc.setLineWidth(0.3);
-  doc.line(logoX + logoW + 3, logoY + 1, logoX + logoW + 3, logoY + logoH - 1);
-
-  // Header text block to the right of divider
-  const textStartX = logoX + logoW + 6;
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(8);
-  doc.setTextColor(153, 27, 27); // #991b1b
-  doc.text('Govt. of India', textStartX, logoY + 3);
-  doc.setFontSize(7.5);
-  doc.setTextColor(127, 29, 29); // #7f1d1d
-  doc.text('Ministry of Communications', textStartX, logoY + 7);
-  doc.setFontSize(12);
-  doc.setFont('helvetica', 'bold');
-  doc.setTextColor(153, 27, 27);
-  doc.text('Department of Posts', textStartX, logoY + 12.5);
-
-  // 2. Document Title
+  // 2. Document Title — directly under logo with tight gap
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(9.5);
   doc.setTextColor(0, 0, 0);
-  doc.text(metadata.reportTitle || 'RECURRING DEPOSIT INSTALLMENT REPORT', pageWidth / 2, 28, { align: 'center' });
+  doc.text(metadata.reportTitle || 'RECURRING DEPOSIT INSTALLMENT REPORT', pageWidth / 2, 38, { align: 'center' });
 
   // 3. Search Criteria Section
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(7.5);
-  doc.text('Search Criteria', margin, 34);
+  doc.text('Search Criteria', margin, 44);
 
-  let curY = 38;
+  let curY = 48;
   const lineSpacing = 3.6;
 
   const criteriaList = [
@@ -151,38 +130,30 @@ export function generateDopRdPdf({
     },
   });
 
-  // 6. Bottom Summary Table (E-Banking Ref No & Total Deposit Amount)
+  // 6. Bottom Summary Table — full width, no border, blue header
   if (summaryRow) {
-    const finalY = doc.lastAutoTable.finalY + 3;
-    autoTable(doc, {
-      startY: finalY,
-      margin: { left: margin },
-      tableWidth: 115,
-      head: [['E-Banking Ref No', 'Total Deposit Amount']],
-      body: [[summaryRow.refNo, summaryRow.totalDepositAmount]],
-      theme: 'plain',
-      styles: {
-        font: 'helvetica',
-        fontSize: 7.5,
-        cellPadding: 1.8,
-        textColor: [0, 0, 0],
-        lineColor: [0, 0, 0],
-        lineWidth: 0.15,
-      },
-      headStyles: {
-        fillColor: [184, 197, 242],
-        textColor: [0, 0, 0],
-        fontStyle: 'bold',
-        fontSize: 7.5,
-        halign: 'left',
-        lineWidth: 0.15,
-        lineColor: [0, 0, 0],
-      },
-      columnStyles: {
-        0: { halign: 'left', cellWidth: 57.5 },
-        1: { halign: 'left', cellWidth: 57.5 },
-      },
-    });
+    const finalY = doc.lastAutoTable.finalY;
+    const tableW = pageWidth - margin * 2; // full usable width
+    const col0W = tableW / 2;
+    const col1W = tableW / 2;
+
+    // Header row — blue fill, no border
+    doc.setFillColor(184, 197, 242); // #b8c5f2
+    doc.rect(margin, finalY, tableW, 7, 'F');
+    // Header text
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(7.5);
+    doc.setTextColor(0, 0, 0);
+    doc.text('E-Banking Ref No', margin + 2, finalY + 4.5);
+    doc.text('Total Deposit Amount', margin + col0W + 2, finalY + 4.5);
+
+    // Data row — white fill, no border
+    const dataY = finalY + 7;
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7.5);
+    doc.setTextColor(0, 0, 0);
+    doc.text(String(summaryRow.refNo || ''), margin + 2, dataY + 4.5);
+    doc.text(String(summaryRow.totalDepositAmount || ''), margin + col0W + 2, dataY + 4.5);
   }
 
   // Save the PDF

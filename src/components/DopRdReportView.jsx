@@ -46,30 +46,20 @@ export default function DopRdReportView({ metadata, headers, rows, summaryRow })
       `}</style>
 
       {/* Sheet Simulation Container */}
-      <div className="dop-container w-full max-w-[840px] bg-white rounded-lg border border-slate-300 shadow-xl p-6 sm:p-8 font-sans text-black">
-        {/* Top Header: Logo on Left & Govt of India Text on Right, compact like target */}
-        <div className="flex items-center justify-center gap-4 mb-4">
-          {/* India Post Logo - rectangular landscape ratio */}
-          <div className="shrink-0" style={{ width: '110px', height: '52px' }}>
+      <div className="dop-container w-full max-w-[840px] bg-white rounded-lg border border-slate-300 shadow-xl p-8 sm:p-10 font-sans text-black">
+        {/* Top Header: Logo — left aligned with compact spacing */}
+        <div className="flex items-center justify-start mb-1">
+          <div className="shrink-0" style={{ width: '400px' }}>
             <img
               src={INDIA_POST_LOGO_BASE64}
               alt="India Post Logo"
-              className="w-full h-full object-contain"
+              className="w-full h-auto object-contain"
             />
-          </div>
-
-          {/* Vertical divider */}
-          <div className="w-px h-12 bg-gray-400 shrink-0"></div>
-
-          <div className="text-left">
-            <p className="text-[11px] font-normal text-[#991b1b] leading-tight">Govt. of India</p>
-            <p className="text-[11px] font-normal text-[#7f1d1d] leading-tight">Ministry of Communications</p>
-            <h1 className="text-[17px] font-bold text-[#991b1b] leading-snug mt-0.5">Department of Posts</h1>
           </div>
         </div>
 
         {/* Document Title */}
-        <div className="text-center my-4">
+        <div className="text-center my-2">
           <h2 className="text-xs sm:text-[13px] font-bold text-black uppercase tracking-tight">
             {metadata.reportTitle || 'RECURRING DEPOSIT INSTALLMENT REPORT'}
           </h2>
@@ -180,26 +170,26 @@ export default function DopRdReportView({ metadata, headers, rows, summaryRow })
           </table>
         </div>
 
-        {/* Summary Table at Bottom — matches target: blue header row, plain data row no outer border */}
+        {/* Summary Table — full width, no border */}
         {summaryRow && (
-          <div className="mt-3">
-            <table className="border-collapse text-[11px]" style={{ minWidth: '380px' }}>
+          <div className="mt-0">
+            <table className="w-full border-collapse text-[11px]">
               <thead>
                 <tr className="bg-[#b8c5f2] text-black font-bold">
-                  <th className="border border-black px-3 py-1.5 text-left" style={{ width: '190px' }}>
+                  <th className="px-3 py-1.5 text-left w-1/2">
                     E-Banking Ref No
                   </th>
-                  <th className="border border-black px-3 py-1.5 text-left" style={{ width: '190px' }}>
+                  <th className="px-3 py-1.5 text-left w-1/2">
                     Total Deposit Amount
                   </th>
                 </tr>
               </thead>
               <tbody>
                 <tr className="bg-white">
-                  <td className="px-3 py-1.5 text-left font-normal border-l border-b border-r border-black">
+                  <td className="px-3 py-1.5 text-left font-normal">
                     {summaryRow.refNo}
                   </td>
-                  <td className="px-3 py-1.5 text-left font-normal border-r border-b border-black">
+                  <td className="px-3 py-1.5 text-left font-normal">
                     {summaryRow.totalDepositAmount}
                   </td>
                 </tr>
