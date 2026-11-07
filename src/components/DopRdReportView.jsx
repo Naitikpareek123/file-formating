@@ -11,15 +11,29 @@ export default function DopRdReportView({ metadata, headers, rows, summaryRow })
             size: A4 portrait;
             margin: 6mm 10mm 6mm 10mm;
           }
-          body {
+          html, body {
             font-family: Arial, Helvetica, sans-serif !important;
             color: #000 !important;
             background: #fff !important;
+            background-color: #fff !important;
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
+            margin: 0 !important;
+            padding: 0 !important;
           }
           .no-print {
             display: none !important;
+          }
+          /* Reset all app page wrappers so no gray-blue background or outer shadows print */
+          .min-h-screen, main, #root, #root > div, .pb-16 {
+            background: #fff !important;
+            background-color: #fff !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            max-width: 100% !important;
+            width: 100% !important;
+            box-shadow: none !important;
+            border: none !important;
           }
           .dop-container {
             width: 100% !important;
@@ -28,6 +42,7 @@ export default function DopRdReportView({ metadata, headers, rows, summaryRow })
             margin: 0 !important;
             border: none !important;
             box-shadow: none !important;
+            background: #fff !important;
           }
           .dop-table {
             border-collapse: collapse !important;
@@ -47,13 +62,14 @@ export default function DopRdReportView({ metadata, headers, rows, summaryRow })
 
       {/* Sheet Simulation Container */}
       <div className="dop-container w-full max-w-[840px] bg-white rounded-lg border border-slate-300 shadow-xl p-8 sm:p-10 font-sans text-black">
-        {/* Top Header: Logo — left aligned with compact spacing */}
-        <div className="flex items-center justify-start mb-1">
-          <div className="shrink-0" style={{ width: '400px' }}>
+        {/* Top Header: Logo — clean official proportion, razor-sharp High-DPI */}
+        <div className="flex items-center justify-start mb-2">
+          <div className="shrink-0" style={{ width: '260px' }}>
             <img
               src={INDIA_POST_LOGO_BASE64}
               alt="India Post Logo"
-              className="w-full h-auto object-contain"
+              className="w-full h-auto object-contain block"
+              style={{ imageRendering: 'auto' }}
             />
           </div>
         </div>

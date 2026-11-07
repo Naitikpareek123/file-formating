@@ -21,30 +21,30 @@ export function generateDopRdPdf({
   const pageWidth = doc.internal.pageSize.getWidth();
   const margin = 10;
 
-  // 1. Logo only — left aligned, compact vertical spacing
-  const logoW = 82;
-  const logoH = 28;
+  // 1. Logo only — left aligned, crisp High-DPI PNG
+  const logoW = 65;
+  const logoH = 22.5;
   const logoX = margin;
   const logoY = 6;
 
   try {
-    doc.addImage(INDIA_POST_LOGO_BASE64, 'JPEG', logoX, logoY, logoW, logoH);
+    doc.addImage(INDIA_POST_LOGO_BASE64, 'PNG', logoX, logoY, logoW, logoH);
   } catch (e) {
     console.warn('Could not add logo to PDF:', e);
   }
 
-  // 2. Document Title — directly under logo with tight gap
+  // 2. Document Title — directly under logo with official spacing
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(9.5);
   doc.setTextColor(0, 0, 0);
-  doc.text(metadata.reportTitle || 'RECURRING DEPOSIT INSTALLMENT REPORT', pageWidth / 2, 38, { align: 'center' });
+  doc.text(metadata.reportTitle || 'RECURRING DEPOSIT INSTALLMENT REPORT', pageWidth / 2, 33, { align: 'center' });
 
   // 3. Search Criteria Section
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(7.5);
-  doc.text('Search Criteria', margin, 44);
+  doc.text('Search Criteria', margin, 39);
 
-  let curY = 48;
+  let curY = 43;
   const lineSpacing = 3.6;
 
   const criteriaList = [
