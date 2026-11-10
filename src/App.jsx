@@ -6,6 +6,7 @@ import DocumentHeaderEditor from './components/DocumentHeaderEditor';
 import ColumnManagerModal from './components/ColumnManagerModal';
 import PrintableTableView from './components/PrintableTableView';
 import DopRdReportView from './components/DopRdReportView';
+import DeveloperProfile from './components/DeveloperProfile';
 import { parseExcelFile, exportToExcel } from './utils/excelParser';
 import { generateGenericPdf, generateDopRdPdf } from './utils/pdfGenerator';
 import { sampleReports } from './utils/sampleData';
@@ -440,6 +441,9 @@ export default function App() {
           </div>
         )}
       </main>
+
+      {/* Developer Profile Footer */}
+      <DeveloperProfile />
     </div>
   );
 }
