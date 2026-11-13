@@ -1,0 +1,17 @@
+{
+  "name": "Excel Print Studio",
+  "short_name": "ExcelStudio",
+  "description": "Auto-format Excel spreadsheets and India Post RD reports for crisp A4 PDF export and direct print.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#059669",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
+
