@@ -7,7 +7,6 @@ import ColumnManagerModal from './components/ColumnManagerModal';
 import PrintableTableView from './components/PrintableTableView';
 import DopRdReportView from './components/DopRdReportView';
 import DeveloperProfile from './components/DeveloperProfile';
-import { Analytics } from '@vercel/analytics/react';
 import { parseExcelFile, exportToExcel } from './utils/excelParser';
 import { generateGenericPdf, generateDopRdPdf } from './utils/pdfGenerator';
 import { sampleReports } from './utils/sampleData';
@@ -445,9 +444,6 @@ export default function App() {
 
       {/* Developer Profile Footer */}
       <DeveloperProfile />
-
-      {/* Vercel Web Analytics */}
-      <Analytics />
     </div>
   );
 }
