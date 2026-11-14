@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import FileUpload from './components/FileUpload';
 import DeveloperProfile from './components/DeveloperProfile';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { parseExcelFile, exportToExcel } from './utils/excelParser';
 import { generateGenericPdf, generateDopRdPdf } from './utils/pdfGenerator';
 import { sampleReports } from './utils/sampleData';
@@ -457,8 +458,9 @@ export default function App() {
       {/* Developer Profile Footer */}
       <DeveloperProfile />
 
-      {/* Vercel Web Analytics */}
+      {/* Vercel Web Analytics & Speed Insights */}
       <Analytics />
+      <SpeedInsights />
     </div>
   );
 }
