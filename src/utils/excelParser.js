@@ -1,5 +1,3 @@
-import * as XLSX from 'xlsx';
-
 /**
  * Checks if raw grid matches India Post / DOP RD Installment Report
  */
@@ -132,6 +130,7 @@ export function checkAndParseDopRdReport(rawGrid) {
  * Parses an Excel or CSV file into sheets and structured rows/columns
  */
 export async function parseExcelFile(file) {
+  const XLSX = await import('xlsx');
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
 
@@ -242,7 +241,8 @@ export async function parseExcelFile(file) {
 /**
  * Export data to an Excel file
  */
-export function exportToExcel(filename, sheetName, headers, rows) {
+export async function exportToExcel(filename, sheetName, headers, rows) {
+  const XLSX = await import('xlsx');
   const wsData = [headers, ...rows];
   const ws = XLSX.utils.aoa_to_sheet(wsData);
   const wb = XLSX.utils.book_new();

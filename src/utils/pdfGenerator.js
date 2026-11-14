@@ -1,18 +1,21 @@
-import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
 import { THEMES } from './themes';
-import { INDIA_POST_LOGO_BASE64 } from './indiapostLogo';
 
 /**
  * Specialized PDF generator for India Post (DOP) RD Installment Report
  */
-export function generateDopRdPdf({
+export async function generateDopRdPdf({
   fileName,
   metadata,
   headers,
   rows,
   summaryRow,
 }) {
+  const [{ default: jsPDF }, { default: autoTable }, { INDIA_POST_LOGO_BASE64 }] = await Promise.all([
+    import('jspdf'),
+    import('jspdf-autotable'),
+    import('./indiapostLogo'),
+  ]);
+
   const doc = new jsPDF({
     orientation: 'portrait',
     unit: 'mm',
@@ -168,7 +171,7 @@ export function generateDopRdPdf({
 /**
  * Standard PDF generator for generic Excel sheets
  */
-export function generateGenericPdf({
+export async function generateGenericPdf({
   fileName = '',
   title = 'Document Report',
   company = '',
@@ -185,6 +188,11 @@ export function generateGenericPdf({
   includeTotals = true,
   summaryRow = null,
 }) {
+  const [{ default: jsPDF }, { default: autoTable }] = await Promise.all([
+    import('jspdf'),
+    import('jspdf-autotable'),
+  ]);
+
   const theme = THEMES[themeId] || THEMES.corporate;
   const doc = new jsPDF({
     orientation: orientation,

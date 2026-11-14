@@ -35,6 +35,10 @@ export default function DeveloperProfile() {
                     <img
                       src={naitikPhoto}
                       alt="Naitik Pareek"
+                      width="96"
+                      height="96"
+                      loading="lazy"
+                      decoding="async"
                       onError={() => setImgError(true)}
                       className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
                     />
@@ -74,6 +78,7 @@ export default function DeveloperProfile() {
                   href="https://github.com/Naitikpareek123"
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="Visit Naitik Pareek GitHub Profile"
                   className="inline-flex items-center justify-center gap-2 px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold shadow-xs transition-all active:scale-95 shrink-0 self-center sm:self-start"
                 >
                   <GithubIcon className="w-3.5 h-3.5" />
